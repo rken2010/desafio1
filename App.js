@@ -1,10 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Text, TextInput, Button,TouchableOpacity, View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+import TaskModal from "./components/TaskModal";
 
 export default function App() {
 
+  /* State de Tareas Pendientes */
+
   const [textTarea, setTextTarea] = useState("");
   const [list, setList] = useState([]);
+
+  /* State del Modal */
+
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  /* Seleccionar Item */
+  const [itemSelected, setItemSelected] = useState({});
+
+  /* State del TextInput para borrarlo y escribirlo */
+
+  /*Agregar un item */
+
+  const addItem = () => {
+    setList((currentState) => [
+      ...currentState,
+      { id: Math.random().toString(), value: textTarea },
+    ]);
+    setTextTarea("");
+    };
+
+  const onHandleChange = (t) => setTextTarea(t);
+
+  const selectedItem = (id) => {
+  
+    setItemSelected(list.find((item) => item.id === id));
+    setModalVisible(true);
+  };
+
+  const deleteItem = () => {
+    
+    setList((currentState) =>
+      currentState.filter((item) => item.id !== itemSelected.id)
+    );
+    setItemSelected({});
+    setModalVisible(false);
+  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => selectedItem(item.id)}>
+      <Text>{item.value}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -15,8 +61,11 @@ export default function App() {
           placeholderTextColor="black"
           style={styles.input}
           value={textTarea}
+          onChangeText={onHandleChange}
         />
-        <Button title="Agregar" />
+         <TouchableOpacity style={styles.button} onPress={addItem}>
+          <Text> Agregar </Text>
+        </TouchableOpacity>
       </View>
       <View>
       </View>
