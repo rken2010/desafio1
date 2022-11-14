@@ -1,9 +1,18 @@
 import { useState } from 'react';
-import { Text, TextInput, Button,TouchableOpacity, View, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
-import TaskModal from "./components/TaskModal";
+import { Text, TextInput, Button,TouchableOpacity, View, FlatList, StyleSheet } from 'react-native';
+import colors from "./constants/colors"
+
+import { useFonts } from 'expo-font';
+import { AppLoading } from 'expo-app-loading';
 
 export default function App() {
+
+  const [ loaded ] = useFonts ({
+    SonoRegular: require("./assets/fonts/Sono/static/Sono/Sono-Medium.ttf"),
+    SonoBold: require("./assets/fonts/Sono/static/Sono/Sono-Bold.ttf")
+  })
+
+  
 
   /* State de Tareas Pendientes */
 
@@ -52,6 +61,10 @@ export default function App() {
     </TouchableOpacity>
   );
 
+  if(!loaded) {
+    return null
+  }
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 30 }}>Pendientes 🛍️</Text>
@@ -68,7 +81,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <View>
-       { !list.length ? <text> No hay tareas pendientes</text>  :
+       { !list.length ? <Text> No hay tareas pendientes</Text>  :
         <FlatList
           style={styles.FlatList}
           data={list}
@@ -87,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    fontFamily: "SonoRegular"
   },
   input:{
     borderBottomColor: "black",
@@ -98,7 +112,6 @@ const styles = StyleSheet.create({
     marginTop:15,
     width: 300,
     padding: 20,
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
