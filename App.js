@@ -68,6 +68,14 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <View>
+       { !list.length ? <text> No hay tareas pendientes</text>  :
+        <FlatList
+          style={styles.FlatList}
+          data={list}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+        }
       </View>
     </View>
   );
@@ -85,5 +93,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 250,
     marginBottom:15
+  },
+  FlatList:{
+    marginTop:15,
+    width: 300,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5, 
   }
 });
