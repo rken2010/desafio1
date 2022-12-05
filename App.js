@@ -1,7 +1,5 @@
 import { useFonts } from 'expo-font';
-import { AppLoading } from 'expo-app-loading';
-import TaskNavigation from './src/navigation/TaskNavigation';
-import { View, Text } from 'react-native';
+import TaskTabNavigation from './src/navigation/TaskTabNavigation';
 
 export default function App() {
   
@@ -11,12 +9,8 @@ export default function App() {
   })
   if(!loaded) return null
 
-  return (
-    
-      <TaskNavigation/>
-   
-    
-
+  return (  
+      <TaskTabNavigation/>
   );
 }
 

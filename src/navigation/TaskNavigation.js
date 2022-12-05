@@ -1,17 +1,19 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../components/Home";
-import Task from "../components/Task";
+import Home from "../screens/Home";
+import CreateTask from "../screens/CreateTask";
+
 
 const Stack = createNativeStackNavigator();
 
-export default TaskNavigation = () => {
+const TaskNavigation = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Task" component={Task} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={Home} options={{title: "Tareas"}} />
+      <Stack.Screen name="Task" component={CreateTask} options={{title: "Nueva Tarea"}} />
+    </Stack.Navigator>
+    
   );
 };
+
+export default TaskNavigation
