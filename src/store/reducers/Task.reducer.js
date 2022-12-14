@@ -11,6 +11,9 @@ const TaskReducer = (state= initialState , action) => {
         case SELECT_PRIORITY:
             const searchPriority = state.task.find( task => task.priorityID === action.priority)
         case ADD_TASK:
+            const itemTask = { ...action.task }
+            return { ...state, itemTask}
+        default: return state
     }
  }
 

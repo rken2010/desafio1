@@ -1,46 +1,74 @@
-import React from "react";
-import { View, Text, StyleSheet  } from "react-native";
-import { TextInput } from 'react-native-paper';
+import { Text, TextInput, TouchableOpacity, View, FlatList, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTask } from '../store/actions/addTask.action';
 
-const CreateTask = () =>{ 
+export default function CreateTask() {  
 
+  const dispatch = useDispatch()
+  const items = useSelector((state) => state.tasks)
 
-  return(
-    <View style={styles.container} >
+  const renderItem = ({ items }) => (
+    <TouchableOpacity onPress={() => selectedItem(item.id)}>
+      <Text>{item.value}</Text>
+    </TouchableOpacity>
+  );
+
+ function addItem() { dispatch (addTask( item )) }
+
+  return (
+    <View style={styles.container}>
       <Text style={{ fontSize: 30 }}>Pendientes 🛍️</Text>
-        <TextInput
-          mode="outlined"
-          label="Nueva Tarea"
-          placeholder="Nombre Tarea"
-          value="nombre"
-          right={<TextInput.Affix text="/100" />}
+        <View>
+            <TextInput
+            placeholder="Agregar Tarea"
+            placeholderTextColor="black"
+            style={styles.input}
+            value={item}
+            
+            />
+            <TouchableOpacity style={styles.button} onPress={addItem}>
+            <Text> Agregar </Text>
+            </TouchableOpacity>
+        </View>
+      <View>
+      
+        <FlatList
+          style={styles.FlatList}
+          data={items}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
         />
-        <TextInput
-          mode="outlined"
-          label="Prioridad"
-          placeholder="Ingrese la prioridad de la tarea"
-          value="prioridad"
-          right={<TextInput.Affix text="/100" />}
-        />
-        <TextInput
-          mode="outlined"
-          label="Duracion"
-          placeholder="ingrese el tiempo que demanda la tarea"
-          value="duracion"
-          right={<TextInput.Affix text="/100" />}
-        />
+        
+      </View>
     </View>
-  )
+  );
 }
-
-export default CreateTask
 
 const styles = StyleSheet.create({
   container: {
-    padding:10,
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: "SonoRegular"
+  },
+  input:{
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    width: 250,
+    marginBottom:15
+  },
+  FlatList:{
+    marginTop:15,
+    width: 300,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5, 
   }
-})
+});
