@@ -1,5 +1,7 @@
 import { useFonts } from 'expo-font';
 import TaskTabNavigation from './src/navigation/TaskTabNavigation';
+import { Provider } from "react-redux"
+import store from "./src/store"
 
 export default function App() {
   
@@ -10,7 +12,9 @@ export default function App() {
   if(!loaded) return null
 
   return (  
+    <Provider store={ store }>
       <TaskTabNavigation/>
+    </Provider>
   );
 }
 
